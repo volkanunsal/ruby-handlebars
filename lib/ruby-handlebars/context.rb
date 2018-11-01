@@ -22,11 +22,8 @@ module Handlebars
       str_attr = attribute.to_s
 
       if item.respond_to?(:[])
-        if item.key?(sym_attr)
-          return item[sym_attr]
-        elsif item.key?(str_attr)
-          return item[str_attr]
-        end
+        return item[sym_attr] if item.key?(sym_attr)
+        return item[str_attr] if item.key?(str_attr)
       end
 
       return item.instance_variable_get("@#{attribute}") if item.instance_variables.include?("@#{attribute}")

@@ -4,16 +4,16 @@ require_relative 'tree'
 
 module Handlebars
   class Helper
-    def initialize(hbs, fn)
+    def initialize(hbs, func)
       @hbs = hbs
-      @fn = fn
+      @func = func
     end
 
     def apply(context, arguments = [], block = [])
       arguments = [arguments] unless arguments.is_a? Array
       args = [context] + arguments.map { |arg| arg.eval(context) } + split_block(block || [])
 
-      @fn.call(*args)
+      @func.call(*args)
     end
 
     def split_block(block)
@@ -24,7 +24,7 @@ module Handlebars
       else_found = false
 
       block.each do |item|
-        if item.is_a?(Tree::Replacement) && item.is_else?
+        if item.is_a?(Tree::Replacement) && item.else?
           receiver = inverse_block
           else_found = true
           next
@@ -33,11 +33,9 @@ module Handlebars
         receiver.add_item(item)
       end
 
-      if else_found
-        return [helper_block, inverse_block]
-      else
-        return [helper_block]
-      end
+      return [helper_block, inverse_block] if else_found
+
+      [helper_block]
     end
   end
 end

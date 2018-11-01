@@ -20,48 +20,19 @@ Gem::Specification.new do |s|
     'LICENSE',
     'README.md'
   ]
-  s.files = [
-    'lib/ruby-handlebars.rb',
-    'lib/ruby-handlebars/context.rb',
-    'lib/ruby-handlebars/helper.rb',
-    'lib/ruby-handlebars/parser.rb',
-    'lib/ruby-handlebars/template.rb',
-    'lib/ruby-handlebars/tree.rb'
-  ]
+  s.files = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(test|spec|features)/})
+  end
   s.homepage = 'https://github.com/vincent-psarga/ruby-handlebars'
   s.rubygems_version = '2.6.10'
   s.summary = 'Pure Ruby library for Handlebars templates'
 
-  if s.respond_to? :specification_version
-    s.specification_version = 4
+  s.add_runtime_dependency('colorize', ['>= 0.7.5', '~> 0.7'])
 
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0')
-      s.add_runtime_dependency('colorize', ['>= 0.7.5', '~> 0.7'])
-      s.add_runtime_dependency('parslet', ['>= 1.6.2', '~> 1.6'])
-      s.add_development_dependency('codeclimate-test-reporter', ['>= 0.4.6', '~> 0.4'])
-      s.add_development_dependency('jeweler', ['>= 2.0.1', '~> 2.0'])
-      s.add_development_dependency('pry', ['>= 0.10.1', '~> 0.10'])
-      s.add_development_dependency('pry-stack_explorer', ['>= 0.4.9.1', '~> 0.4'])
-      s.add_development_dependency('rspec', ['>= 3.1.0', '~> 3.1'])
-      s.add_development_dependency('rspec-mocks', ['>= 3.1.3', '~> 3.1'])
-    else
-      s.add_dependency('codeclimate-test-reporter', ['>= 0.4.6', '~> 0.4'])
-      s.add_dependency('colorize', ['>= 0.7.5', '~> 0.7'])
-      s.add_dependency('jeweler', ['>= 2.0.1', '~> 2.0'])
-      s.add_dependency('parslet', ['>= 1.6.2', '~> 1.6'])
-      s.add_dependency('pry', ['>= 0.10.1', '~> 0.10'])
-      s.add_dependency('pry-stack_explorer', ['>= 0.4.9.1', '~> 0.4'])
-      s.add_dependency('rspec', ['>= 3.1.0', '~> 3.1'])
-      s.add_dependency('rspec-mocks', ['>= 3.1.3', '~> 3.1'])
-    end
-  else
-    s.add_dependency('parslet', ['>= 1.6.2', '~> 1.6'])
-    s.add_dependency('parslet', ['>= 1.6.2', '~> 1.6'])
-    s.add_dependency('pry', ['>= 0.10.1', '~> 0.10'])
-    s.add_dependency('pry-stack_explorer', ['>= 0.4.9.1', '~> 0.4'])
-    s.add_dependency('rspec', ['>= 3.1.0', '~> 3.1'])
-    s.add_dependency('rspec-mocks', ['>= 3.1.3', '~> 3.1'])
-    s.add_dependency('rspec-mocks', ['>= 3.1.3', '~> 3.1'])
-    s.add_dependency('rspec-mocks', ['>= 3.1.3', '~> 3.1'])
-  end
+  s.add_runtime_dependency('parslet', ['>= 1.6.2', '~> 1.6'])
+  s.add_development_dependency('codeclimate-test-reporter', ['>= 0.4.6', '~> 0.4'])
+  s.add_development_dependency('pry', ['>= 0.10.1', '~> 0.10'])
+  s.add_development_dependency('pry-stack_explorer', ['>= 0.4.9.1', '~> 0.4'])
+  s.add_development_dependency('rspec', ['>= 3.8.0'])
+  s.add_development_dependency('rspec-mocks', ['>= 3.8.0'])
 end

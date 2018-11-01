@@ -25,7 +25,7 @@ module Handlebars
         end
       end
 
-      def is_else?
+      def else?
         item.to_s == 'else'
       end
     end
@@ -64,8 +64,8 @@ module Handlebars
       end
       alias fn _eval
 
-      def add_item(i)
-        items << i
+      def add_item(item)
+        items << item
       end
     end
   end

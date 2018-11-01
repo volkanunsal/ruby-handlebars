@@ -19,8 +19,8 @@ module Handlebars
       Template.new(self, template_to_ast(template))
     end
 
-    def register_helper(name, &fn)
-      @helpers[name.to_s] = Helper.new(self, fn)
+    def register_helper(name, &func)
+      @helpers[name.to_s] = Helper.new(self, func)
     end
 
     def get_helper(name)
