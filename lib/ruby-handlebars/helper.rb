@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'tree'
 
 module Handlebars
@@ -9,7 +11,7 @@ module Handlebars
 
     def apply(context, arguments = [], block = [])
       arguments = [arguments] unless arguments.is_a? Array
-      args = [context] + arguments.map {|arg| arg.eval(context)} + split_block(block || [])
+      args = [context] + arguments.map { |arg| arg.eval(context) } + split_block(block || [])
 
       @fn.call(*args)
     end

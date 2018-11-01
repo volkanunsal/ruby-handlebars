@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'colorize'
 
 module Handlebars
@@ -9,8 +11,8 @@ module Handlebars
     end
 
     class TemplateContent < TreeItem.new(:content)
-      def _eval(context)
-        return content
+      def _eval(_context)
+        content
       end
     end
 
@@ -29,8 +31,8 @@ module Handlebars
     end
 
     class String < TreeItem.new(:content)
-      def _eval(context)
-        return content
+      def _eval(_context)
+        content
       end
     end
 
@@ -58,9 +60,9 @@ module Handlebars
 
     class Block < TreeItem.new(:items)
       def _eval(context)
-        items.map {|item| item._eval(context)}.join()
+        items.map { |item| item._eval(context) }.join
       end
-      alias :fn :_eval
+      alias fn _eval
 
       def add_item(i)
         items << i
@@ -69,34 +71,34 @@ module Handlebars
   end
 
   class Transform < Parslet::Transform
-    rule(template_content: simple(:content)) {Tree::TemplateContent.new(content)}
-    rule(replaced_item: simple(:item)) {Tree::Replacement.new(item)}
-    rule(str_content: simple(:content)) {Tree::String.new(content)}
-    rule(parameter_name: simple(:name)) {Tree::Parameter.new(name)}
+    rule(template_content: simple(:content)) { Tree::TemplateContent.new(content) }
+    rule(replaced_item: simple(:item)) { Tree::Replacement.new(item) }
+    rule(str_content: simple(:content)) { Tree::String.new(content) }
+    rule(parameter_name: simple(:name)) { Tree::Parameter.new(name) }
 
     rule(
       helper_name: simple(:name),
       parameters: subtree(:parameters)
-    ) {
+    ) do
       Tree::Helper.new(name, parameters)
-    }
+    end
 
     rule(
       helper_name: simple(:name),
       block_items: subtree(:block_items)
-    ) {
+    ) do
       Tree::Helper.new(name, [], block_items)
-    }
+    end
 
     rule(
       helper_name: simple(:name),
       parameters: subtree(:parameters),
       block_items: subtree(:block_items)
-    ) {
+    ) do
       Tree::Helper.new(name, parameters, block_items)
-    }
+    end
 
-    rule(partial_name: simple(:partial_name)) {Tree::Partial.new(partial_name)}
-    rule(block_items: subtree(:block_items)) {Tree::Block.new(block_items)}
+    rule(partial_name: simple(:partial_name)) { Tree::Partial.new(partial_name) }
+    rule(block_items: subtree(:block_items)) { Tree::Block.new(block_items) }
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'context'
 
 module Handlebars
@@ -8,9 +10,7 @@ module Handlebars
     end
 
     def call(args)
-      if args.is_a? Hash
-        @hbs.set_context(args)
-      end
+      @hbs.set_context(args) if args.is_a? Hash
 
       @ast.eval(@hbs)
     end

@@ -10,5 +10,4 @@ describe Handlebars::Transform do
   def get_ast(content)
     transform.apply(parser.parse(content))
   end
-
 end

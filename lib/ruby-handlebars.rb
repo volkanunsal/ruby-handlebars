@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'ruby-handlebars/parser'
 require_relative 'ruby-handlebars/tree'
 require_relative 'ruby-handlebars/template'
@@ -60,7 +62,7 @@ module Handlebars
         elsif else_block
           else_block.fn(context)
         else
-          ""
+          ''
         end
       end
     end
@@ -69,10 +71,8 @@ module Handlebars
       register_helper('each') do |context, items, block, else_block|
         current_this = context.get('this')
 
-        if (items.nil? || items.empty?)
-          if else_block
-            result = else_block.fn(context)
-          end
+        if items.nil? || items.empty?
+          result = else_block.fn(context) if else_block
         else
           result = items.map do |item|
             context.add_item(:this, item)

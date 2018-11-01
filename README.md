@@ -1,5 +1,4 @@
-ruby-handlebars
-===============
+# ruby-handlebars
 
 [![Build Status](https://travis-ci.org/vincent-psarga/ruby-handlebars.svg?branch=master)](https://travis-ci.org/vincent-psarga/ruby-handlebars)
 [![Code Climate](https://codeclimate.com/github/vincent-psarga/ruby-handlebars/badges/gpa.svg)](https://codeclimate.com/github/vincent-psarga/ruby-handlebars)
@@ -8,8 +7,7 @@ ruby-handlebars
 Pure Ruby library for [Handlebars](http://handlebarsjs.com/) template system.
 The main goal of this library is to simplify the use of Ruby and Handlebars on Windows machine. If you do not have any need of working on Windows, take a look at [handlebars.rb](https://github.com/cowboyd/handlebars.rb) that uses the real Handlebars library.
 
-Installing
-----------
+## Installing
 
 Simply run:
 
@@ -19,13 +17,11 @@ gem install ruby-handlebars
 
 No need for libv8, ruby-racer or any JS related tool.
 
-Using
------
+## Using
 
 A very simple case:
 
 ```ruby
-
 require 'ruby-handlebars'
 
 hbs = Handlebars::Handlebars.new
@@ -62,7 +58,7 @@ hbs.compile("{{#comment '//'}}My comment{{/comment}}").call
 # Will give: "// My comment"
 ```
 
-Note that in any block helper you can use an ``else`` block:
+Note that in any block helper you can use an `else` block:
 
 ```ruby
 hbs.register_helper('markdown') do |context, block, else_block|
@@ -82,7 +78,7 @@ hbs.compile(template).call({description: my_description})
 # Output will depend on the validity of the 'my_description' variable
 ```
 
-Two default helpers are provided: ``each`` and ``if``. It is not yet possible to name the current item in an each loop and ``this`` must be used to reference it.
+Two default helpers are provided: `each` and `if`. It is not yet possible to name the current item in an each loop and `this` must be used to reference it.
 
 ```ruby
 template = [
@@ -100,18 +96,17 @@ template = [
 ].join("\n")
 ```
 
-Limitations and roadmap
------------------------
+## Limitations and roadmap
 
 This gem does not reuse the real Handlebars code (the JS one) and not everything is handled yet (but it will be someday ;) ):
 
- - there is no escaping, all strings are considered as safe (so ``{{{ my_var }}}`` and ``{{ my_var }}``) will output the same thing
- - the parser is not fully tested yet, it may complain with spaces ...
- - curly bracket are __not__ usable in the template content yet. one workaround is to create simple helpers to generate them
- - parsing errors are, well, not helpful at all
+- there is no escaping, all strings are considered as safe (so `{{{ my_var }}}` and `{{ my_var }}`) will output the same thing
+- the parser is not fully tested yet, it may complain with spaces ...
+- curly bracket are **not** usable in the template content yet. one workaround is to create simple helpers to generate them
+- parsing errors are, well, not helpful at all
 
-Aknowledgements
----------------
+## Acknowledgements
 
 This gem would simply not exist if the handlebars team was not here. Thanks a lot for this awesome templating system.
+
 Thanks a lot to @cowboyd for the [handlebars.rb](https://github.com/cowboyd/handlebars.rb) gem. We used it for a while and it's great (and as told at the beginning of the README, if you do not need any Windows support, use handlebars.rb instead ;) )

@@ -1,12 +1,12 @@
+# frozen_string_literal: true
+
 module Handlebars
   module Context
     def get(path)
-      items = path.split('.'.freeze)
+      items = path.split('.')
 
       current = @data
-      until items.empty?
-        current = get_attribute(current, items.shift)
-      end
+      current = get_attribute(current, items.shift) until items.empty?
 
       current
     end
@@ -22,20 +22,16 @@ module Handlebars
       str_attr = attribute.to_s
 
       if item.respond_to?(:[])
-        if item.has_key?(sym_attr)
+        if item.key?(sym_attr)
           return item[sym_attr]
-        elsif item.has_key?(str_attr)
+        elsif item.key?(str_attr)
           return item[str_attr]
         end
       end
 
-      if item.instance_variables.include?("@#{attribute}")
-        return item.instance_variable_get("@#{attribute}")
-      end
+      return item.instance_variable_get("@#{attribute}") if item.instance_variables.include?("@#{attribute}")
 
-      if item.respond_to?(sym_attr)
-        return item.send(sym_attr)
-      end
+      return item.send(sym_attr) if item.respond_to?(sym_attr)
     end
   end
 end
